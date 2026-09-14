@@ -1,0 +1,58 @@
+# ==============================
+# SECURE VAULT - Git Ignore
+# ==============================
+
+# VirtualBox / Virtual Machines
+*.vdi
+*.vmdk
+*.vhd
+*.vhdx
+*.sav
+*.ova
+*.ovf
+*.vbox
+*.vbox-prev
+Snapshots/
+VirtualBox VMs/
+
+# Operating System ISOs
+*.iso
+
+# Packet captures
+# Raw captures may contain sensitive host/network information
+*.pcap
+*.pcapng
+
+# Logs and crash dumps
+*.log
+*.dmp
+*.crash
+*.dump
+
+# Secrets / credentials
+.env
+.env.*
+secrets/
+credentials/
+*.pem
+*.key
+*.pfx
+*.p12
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# IDE files
+.vscode/
+.idea/
