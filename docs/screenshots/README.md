@@ -2,109 +2,117 @@
 
 This directory contains sanitized screenshots that demonstrate the implementation and validation of the SECURE VAULT cybersecurity lab.
 
-Sensitive information such as usernames, host paths, personal IP addresses, credentials, tokens, and unrelated host-network traffic should be removed before screenshots are published.
+The screenshots are organized by technical area so each configuration and validation step can be independently reviewed.
 
-## Evidence Categories
+## Networking Evidence
 
-### 1. Windows Endpoint
+### Static IP Configuration
 
-Planned evidence:
+The Windows endpoint is configured with the static SEC-LAB address:
 
 ```text
-windows/
-├── windows-desktop.png
-├── vm-configuration.png
-└── guest-additions.png
+10.10.10.10/24
 ```
 
-These screenshots demonstrate:
-
-- Windows 11 endpoint deployment
-- VirtualBox VM configuration
-- Guest Additions installation
-- Endpoint readiness
+![Static IP Configuration](networking/static-ip.png)
 
 ---
 
-### 2. SEC-LAB Networking
+### Host-to-VM Connectivity
 
-Planned evidence:
+Connectivity from the Windows host to the security endpoint was validated using ICMP.
 
 ```text
-networking/
-├── static-ip.png
-├── host-to-vm-ping.png
-├── host-only-adapter.png
-└── internet-connectivity-test.png
+Target: 10.10.10.10
+Packet Loss: 0%
 ```
 
-These screenshots demonstrate:
-
-- SEC-LAB Host-Only network configuration
-- Static endpoint address `10.10.10.10`
-- Host-to-endpoint communication
-- Controlled NAT Internet access
-- Successful connectivity validation
+![Host to VM Ping](networking/host-to-vm-ping.png)
 
 ---
 
-### 3. Sysmon Telemetry
+### Temporary Internet Connectivity
 
-Planned evidence:
+A secondary NAT adapter is used when Internet access is required for downloads and updates.
 
-```text
-sysmon/
-├── sysmon-installation.png
-├── sysmon-service-running.png
-└── sysmon-event-log.png
+Connectivity was validated using:
+
+```powershell
+Test-NetConnection learn.microsoft.com -Port 443
 ```
 
-These screenshots demonstrate:
+Result:
 
-- Microsoft Sysmon installation
-- Sysmon configuration validation
-- Running Sysmon service
-- Security event generation
-- Windows endpoint telemetry
+```text
+TcpTestSucceeded : True
+```
+
+![Internet Connectivity Test](networking/internet-connectivity-test.png)
 
 ---
 
-## Current Evidence Status
+### Firewall Validation
+
+Windows Defender Firewall remains enabled.
+
+A controlled inbound ICMP rule named:
 
 ```text
-[✓] Windows endpoint deployed
-[✓] Static networking configured
-[✓] Host-to-VM connectivity verified
-[✓] Temporary NAT connectivity verified
-[✓] Sysmon installed
+SEC-LAB Ping
+```
+
+was configured to allow host-to-endpoint connectivity testing.
+
+![Firewall Rule](networking/firewall-rule.png)
+
+---
+
+## Sysmon Evidence
+
+### Sysmon Service
+
+Microsoft Sysmon is installed and running on the Windows endpoint.
+
+Validation command:
+
+```powershell
+Get-Service Sysmon64
+```
+
+Expected status:
+
+```text
+Running
+```
+
+![Sysmon Service Running](sysmon/sysmon-service-running.png)
+
+---
+
+### Sysmon Event Generation
+
+Sysmon events were successfully generated and validated from the Windows Event Log.
+
+Validation command:
+
+```powershell
+Get-WinEvent -LogName "Microsoft-Windows-Sysmon/Operational" -MaxEvents 10 |
+Select-Object TimeCreated, Id, ProviderName
+```
+
+![Sysmon Events](sysmon/sysmon-events.png)
+
+---
+
+## Evidence Summary
+
+```text
+[✓] Static IP configured
+[✓] Host-to-VM communication verified
+[✓] Internet connectivity verified
+[✓] Windows Firewall rule validated
 [✓] Sysmon service running
-[✓] Sysmon telemetry validated
-
-[ ] Sanitized screenshots uploaded
-[ ] SIEM screenshots
-[ ] Detection-rule screenshots
-[ ] Security-alert screenshots
-[ ] Incident-investigation screenshots
+[✓] Sysmon events generated
 ```
 
-## Screenshot Safety
-
-Before publishing screenshots, verify that they do not expose:
-
-- Passwords
-- API keys
-- Authentication tokens
-- Personal email addresses
-- Sensitive usernames
-- Personal filesystem paths
-- Real host-network packet captures
-- Private account information
-- Recovery keys or secrets
-
-Only screenshots relevant to the isolated SECURE VAULT lab should be published.
-
-## Purpose
-
-Screenshots provide supporting evidence that the documented lab components were actually deployed, configured, tested, and validated.
-
-They complement the technical documentation and configuration files stored in this repository.
+These screenshots provide direct evidence that the Windows endpoint, network configuration, and endpoint telemetry components of SECURE VAULT are functioning as intended.
