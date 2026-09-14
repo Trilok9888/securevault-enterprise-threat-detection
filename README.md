@@ -25,6 +25,32 @@ SECURE VAULT is being built to demonstrate practical experience with:
 - DevSecOps
 
 ---
+# 📚 Project Documentation
+
+Detailed technical documentation and validation evidence are available below:
+
+| Area | Documentation |
+|---|---|
+| Architecture | [SECURE VAULT Architecture](docs/architecture.md) |
+| Network Design | [SEC-LAB Network Design](docs/network-design.md) |
+| Windows Endpoint | [Windows Security Endpoint](docs/windows-endpoint.md) |
+| Sysmon Configuration | [Sysmon XML Configuration](configs/sysmon/sysmonconfig.xml) |
+| Lab Evidence | [Networking & Sysmon Screenshots](docs/screenshots/README.md) |
+
+## 🔎 Current Evidence
+
+The repository includes validation evidence for:
+
+- Static Windows endpoint IP configuration
+- Host-to-VM connectivity
+- Temporary NAT Internet connectivity
+- Windows Defender Firewall rule
+- Running Sysmon service
+- Generated Sysmon security events
+
+➡️ [View Lab Evidence](docs/screenshots/README.md)
+
+---
 
 # 🏗️ Lab Architecture
 
